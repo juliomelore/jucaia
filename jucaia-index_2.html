@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JuCaIA — Vídeo de produto com IA</title>
+<meta name="description" content="Produtora de vídeo com IA para gastronomia, marcas e e-commerce. Vídeo de produto a partir de R$ 250, entregue em 72h, sem estúdio e sem enviar o produto." />
+<meta property="og:title" content="JuCaIA — Vídeo de produto com IA" />
+<meta property="og:description" content="Vídeo de produto a partir de R$ 250. Entrega em 72h, sem estúdio e sem enviar o produto físico." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://i.ytimg.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" />
+<style>
+/* ============================================================
+   JuCaIA — sistema visual
+   Paleta fixa (branco / preto / ciano), sem variação por tema:
+   o site precisa ser idêntico para todo cliente que abrir o link.
+   ============================================================ */
+:root{
+  --ink:#0B0F12;
+  --ink-soft:#4C5A63;
+  --ink-mute:#7C8B94;
+  --paper:#FFFFFF;
+  --paper-2:#F4F8F9;
+  --line:#E1E9EC;
+  --line-strong:#C7D4D9;
+
+  --wall:#0B0F12;        /* fundo das paredes de vídeo */
+  --wall-2:#141A1F;
+  --wall-line:#232C33;
+  --wall-text:#E8EFF2;
+  --wall-mute:#8FA1AB;
+
+  --cyan:#00B8CF;        /* acento funcional */
+  --cyan-deep:#00778A;   /* ciano legível sobre branco */
+  --cyan-bright:#22D8EE; /* ciano sobre preto */
+  --green:#1FA855;       /* WhatsApp, dessaturado para não gritar */
+  --green-bright:#25D366;
+
+  --ff-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --ff-body:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --ff-mono:"DM Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
+
+  --wrap:1200px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--ff-body);font-size:17px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+[hidden]{display:none !important}
+h1,h2,h3,h4{font-family:var(--ff-display);font-weight:700;letter-spacing:-.022em;line-height:1.08;text-wrap:balance;margin:0}
+p{margin:0}
+:focus-visible{outline:2px solid var(--cyan-deep);outline-offset:3px}
+
+.wrap{width:min(100% - 40px,var(--wrap));margin-inline:auto}
+section{padding-block:clamp(60px,7.5vw,104px)}
+.wall{background:var(--wall);color:var(--wall-text)}
+.tint{background:var(--paper-2)}
+
+/* ---------- rótulo de seção ---------- */
+.lbl{
+  font-family:var(--ff-mono);font-size:11.5px;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--cyan-deep);
+  display:block;
+}
+.wall .lbl{color:var(--cyan-bright)}
+
+/* ---------- cabeçalho de seção ---------- */
+.shead{max-width:60ch;border-top:1px solid var(--line);padding-top:22px}
+.wall .shead{border-color:var(--wall-line)}
+.shead h2{font-size:clamp(27px,3.2vw,40px);margin-top:16px}
+.shead p{margin-top:15px;font-size:17.5px;color:var(--ink-soft)}
+.wall .shead p{color:var(--wall-mute)}
+.shead + *{margin-top:clamp(32px,4vw,48px)}
+
+/* ============================================================ NAV */
+.nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:20px;height:68px}
+.brand{display:flex;align-items:baseline;text-decoration:none;font-family:var(--ff-display);font-weight:700;font-size:21px;letter-spacing:-.04em;flex-shrink:0}
+.brand i{font-style:normal;color:var(--cyan-deep)}
+.tabs{display:flex;gap:2px;margin-left:auto}
+.tab{background:none;border:0;cursor:pointer;padding:8px 14px;border-radius:7px;font-size:15px;font-weight:500;color:var(--ink-soft);transition:color .15s,background .15s}
+.tab:hover{color:var(--ink);background:var(--paper-2)}
+.tab[aria-selected="true"]{color:var(--ink);font-weight:600;background:var(--paper-2);box-shadow:inset 0 -2px 0 var(--cyan)}
+.nav-cta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;text-decoration:none;padding:11px 18px;border-radius:8px;font-weight:600;font-size:14.5px;white-space:nowrap;transition:background .15s}
+.nav-cta:hover{background:var(--cyan-deep)}
+.nav-cta svg{width:16px;height:16px;fill:currentColor}
+.burger{display:none;background:none;border:1px solid var(--line-strong);border-radius:8px;padding:8px 11px;cursor:pointer}
+
+/* ============================================================ BOTÕES */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:15px 26px;border-radius:9px;text-decoration:none;font-weight:600;font-size:16px;border:1px solid transparent;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.btn svg{width:18px;height:18px;fill:currentColor;flex-shrink:0}
+.btn-wa{background:var(--green);color:#fff}
+.btn-wa:hover{background:#178E47}
+.btn-line{border-color:var(--line-strong);color:var(--ink);background:#fff}
+.btn-line:hover{border-color:var(--ink);background:var(--paper-2)}
+.wall .btn-line{border-color:var(--wall-line);color:var(--wall-text);background:transparent}
+.wall .btn-line:hover{border-color:var(--cyan-bright);color:var(--cyan-bright);background:transparent}
+
+/* ============================================================ HERO */
+.hero{padding-block:clamp(48px,6vw,86px) clamp(44px,5vw,72px);border-bottom:1px solid var(--line)}
+.hero-in{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(34px,5vw,72px);align-items:center}
+.hero h1{font-size:clamp(34px,4.6vw,55px);margin-top:18px;max-width:16ch}
+.hero-sub{margin-top:20px;font-size:18.5px;color:var(--ink-soft);max-width:52ch}
+.price-tag{
+  display:inline-flex;align-items:baseline;gap:10px;margin-top:26px;flex-wrap:wrap;
+  border:1px solid var(--line-strong);border-left:3px solid var(--cyan);
+  border-radius:0 8px 8px 0;padding:12px 18px;background:var(--paper-2);
+}
+.price-tag b{font-family:var(--ff-display);font-weight:700;font-size:23px;letter-spacing:-.03em}
+.price-tag span{font-size:14.5px;color:var(--ink-soft)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:24px}
+.hero-note{margin-top:16px;font-family:var(--ff-mono);font-size:12.5px;color:var(--ink-mute);letter-spacing:.02em}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+
+/* ============================================================ FAIXA DE DADOS */
+.data{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--wall-line);border-bottom:1px solid var(--wall-line)}
+.data-i{padding:26px 26px 28px;border-right:1px solid var(--wall-line)}
+.data-i:last-child{border-right:0}
+.data-n{font-family:var(--ff-display);font-weight:700;font-size:clamp(34px,4.2vw,46px);letter-spacing:-.04em;color:var(--cyan-bright);font-variant-numeric:tabular-nums;line-height:1}
+.data-t{margin-top:12px;font-size:15px;color:var(--wall-text);line-height:1.45}
+.data-s{margin-top:10px;font-family:var(--ff-mono);font-size:11px;color:var(--wall-mute);letter-spacing:.05em}
+.sources{margin-top:22px;font-size:13.5px;color:var(--wall-mute);max-width:80ch}
+.sources a{color:var(--wall-mute);text-decoration:underline;text-underline-offset:3px}
+.sources a:hover{color:var(--cyan-bright)}
+
+/* ============================================================ NICHOS */
+.niche{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(26px,4vw,58px);align-items:center;padding-block:clamp(38px,4.5vw,58px);border-top:1px solid var(--line)}
+.niche:first-of-type{border-top:0;padding-top:0}
+.niche.flip > .niche-txt{order:2}
+.niche-txt h3{font-size:clamp(24px,2.8vw,32px);margin-top:14px}
+.niche-txt > p{margin-top:14px;color:var(--ink-soft);font-size:17px;max-width:48ch}
+.niche-list{margin:20px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.niche-list li{display:flex;gap:11px;font-size:15.5px;align-items:flex-start}
+.niche-list svg{width:16px;height:16px;margin-top:5px;flex-shrink:0;fill:none;stroke:var(--cyan-deep);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.niche-cta{display:inline-flex;align-items:center;gap:7px;margin-top:20px;font-weight:600;font-size:15.5px;color:var(--cyan-deep);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+.niche-cta:hover{color:var(--ink)}
+
+/* ============================================================ CARTÕES DE VÍDEO */
+.vgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.vgrid.c4{grid-template-columns:repeat(4,1fr)}
+.vgrid.wide{grid-template-columns:repeat(2,1fr);gap:18px}
+.vgrid.solo{grid-template-columns:1fr}
+
+.vcard{display:block;text-decoration:none;position:relative;background:var(--wall-2);border-radius:6px;overflow:hidden;transition:box-shadow .18s}
+.vcard:hover{box-shadow:0 0 0 2px var(--cyan)}
+.vthumb{position:relative;background:#000;overflow:hidden}
+.vgrid .vthumb,.trio .vthumb{aspect-ratio:9/16}
+.vgrid.wide .vthumb,.vgrid.solo .vthumb{aspect-ratio:16/9}
+.vthumb img{width:100%;height:100%;object-fit:cover}
+.vthumb::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(6,9,11,.94) 0%,rgba(6,9,11,.25) 40%,rgba(6,9,11,0) 66%)}
+/* se nenhuma variante de miniatura carregar, o cartão continua legível */
+.vthumb.no-thumb{background:linear-gradient(155deg,#18222A,#0B0F12)}
+.vthumb.no-thumb img{display:none}
+
+.play{position:absolute;top:12px;left:12px;z-index:2;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);display:grid;place-items:center;backdrop-filter:blur(3px);transition:background .18s,border-color .18s}
+.vcard:hover .play{background:var(--cyan);border-color:var(--cyan)}
+.play svg{width:11px;height:11px;fill:#fff;margin-left:2px}
+.vcard:hover .play svg{fill:var(--wall)}
+.ratio{position:absolute;top:14px;right:12px;z-index:2;font-family:var(--ff-mono);font-size:10px;letter-spacing:.08em;color:rgba(255,255,255,.72)}
+.vmeta{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:13px}
+.vmeta h4{font-family:var(--ff-body);font-weight:600;font-size:14px;color:#fff;line-height:1.3;letter-spacing:0}
+.vmeta span{display:block;font-family:var(--ff-mono);font-size:10px;color:var(--cyan-bright);letter-spacing:.11em;text-transform:uppercase;margin-top:6px}
+.vgrid.wide .vmeta,.vgrid.solo .vmeta{padding:20px}
+.vgrid.wide .vmeta h4,.vgrid.solo .vmeta h4{font-size:18px}
+.empty{grid-column:1/-1;padding:40px 0;color:var(--wall-mute);font-size:15.5px}
+
+/* ============================================================ PASSOS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+.step{padding:26px 26px 28px;border-right:1px solid var(--line)}
+.step:last-child{border-right:0}
+.step-n{font-family:var(--ff-mono);font-size:11.5px;letter-spacing:.16em;color:var(--cyan-deep)}
+.step h3{font-size:19px;margin-top:13px}
+.step p{margin-top:9px;font-size:15.5px;color:var(--ink-soft)}
+.step-t{display:block;margin-top:15px;font-family:var(--ff-mono);font-size:11.5px;color:var(--ink-mute);letter-spacing:.05em}
+
+/* ============================================================ PREÇO */
+.price{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,60px);align-items:start}
+.price-card{border:1px solid var(--line-strong);border-radius:12px;padding:30px;background:var(--paper)}
+.price-card .from{font-family:var(--ff-mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+.price-card .val{font-family:var(--ff-display);font-weight:700;font-size:clamp(40px,5vw,54px);letter-spacing:-.045em;margin-top:8px;line-height:1}
+.price-card .val small{font-size:18px;font-weight:600;color:var(--ink-soft);letter-spacing:-.01em}
+.price-card ul{margin:22px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.price-card li{display:flex;gap:10px;font-size:15.5px;align-items:flex-start}
+.price-card li svg{width:16px;height:16px;margin-top:5px;flex-shrink:0;fill:none;stroke:var(--cyan-deep);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.price-card .btn{width:100%;margin-top:24px}
+.spec{display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.spec:first-child{border-top:1px solid var(--line)}
+.spec dt{font-family:var(--ff-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan-deep);width:108px;flex-shrink:0}
+.spec dd{margin:0;font-size:15.5px}
+.spec dd small{display:block;color:var(--ink-soft);font-size:13.5px;margin-top:2px}
+.plus{margin-top:24px;font-size:15px;color:var(--ink-soft)}
+.plus b{color:var(--ink);font-weight:600}
+
+/* ============================================================ FAQ */
+.faq{display:grid;grid-template-columns:repeat(2,1fr);gap:0 44px}
+details.q{border-bottom:1px solid var(--line);height:fit-content}
+details.q summary{cursor:pointer;list-style:none;padding:19px 0;font-weight:600;font-size:16.5px;display:flex;gap:16px;align-items:baseline;justify-content:space-between}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary::after{content:"+";font-family:var(--ff-mono);font-size:19px;color:var(--cyan-deep);line-height:1;flex-shrink:0;transition:transform .18s}
+details.q[open] summary::after{transform:rotate(45deg)}
+details.q .a{padding:0 0 20px;color:var(--ink-soft);font-size:15.5px;max-width:56ch}
+
+/* ============================================================ CTA */
+.cta{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(26px,4vw,56px);align-items:center}
+.cta h2{font-size:clamp(27px,3.4vw,40px)}
+.cta p{margin-top:15px;color:var(--wall-mute);font-size:17.5px;max-width:46ch}
+.cta-side{display:flex;flex-direction:column;gap:11px}
+
+/* ============================================================ FILTROS */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{border:1px solid var(--wall-line);background:transparent;color:var(--wall-mute);padding:8px 15px;border-radius:6px;font-size:14px;cursor:pointer;transition:all .15s;font-weight:500}
+.chip:hover{border-color:var(--cyan-bright);color:var(--wall-text)}
+.chip[aria-pressed="true"]{background:var(--cyan-bright);border-color:var(--cyan-bright);color:var(--wall);font-weight:600}
+.chip .c{font-family:var(--ff-mono);font-size:11px;opacity:.65;margin-left:6px}
+.fsep{width:1px;height:22px;background:var(--wall-line);margin-inline:6px}
+
+/* ============================================================ SOBRE / CONTATO */
+.about{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,4.5vw,64px);align-items:start}
+.about p{color:var(--ink-soft);font-size:17px}
+.about p + p{margin-top:15px}
+.about strong{color:var(--ink);font-weight:600}
+.about .lead{font-size:20.5px;color:var(--ink);font-weight:500;line-height:1.5}
+.about .pull{
+  margin:26px 0;padding:0 0 0 20px;border-left:3px solid var(--cyan);
+  font-family:var(--ff-display);font-weight:600;font-size:clamp(20px,2.2vw,25px);
+  line-height:1.24;letter-spacing:-.02em;color:var(--ink);
+}
+.about .pull + p{margin-top:0}
+.pillars{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.pillar{padding:20px 0;border-bottom:1px solid var(--line)}
+.pillar h3{font-size:17px}
+.pillar p{margin-top:6px;font-size:15px;color:var(--ink-soft)}
+
+.contact{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(28px,4vw,56px);align-items:start}
+.ch-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--wall-line)}
+.ch{display:flex;gap:14px;align-items:center;text-decoration:none;padding:17px 0;border-bottom:1px solid var(--wall-line);transition:padding-left .18s}
+a.ch:hover{padding-left:8px}
+.ch-ic{width:34px;height:34px;border-radius:7px;background:var(--wall-2);display:grid;place-items:center;flex-shrink:0}
+.ch-ic svg{width:17px;height:17px;fill:var(--cyan-bright)}
+.ch b{display:block;font-weight:600;font-size:15.5px;color:var(--wall-text)}
+.ch span{font-family:var(--ff-mono);font-size:12.5px;color:var(--wall-mute)}
+
+.form{border:1px solid var(--wall-line);border-radius:12px;padding:clamp(24px,3vw,32px)}
+.form h3{font-size:21px}
+.form > p{margin-top:9px;color:var(--wall-mute);font-size:15px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+.field label{font-family:var(--ff-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan-bright)}
+.field input,.field select,.field textarea{font-family:var(--ff-body);font-size:15.5px;color:var(--wall-text);background:var(--wall-2);border:1px solid var(--wall-line);border-radius:7px;padding:12px 14px;outline:none;transition:border-color .15s;width:100%}
+.field textarea{resize:vertical;min-height:88px}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--cyan-bright)}
+.field input::placeholder,.field textarea::placeholder{color:#61737D}
+.field select option{background:#141A1F;color:#E8EFF2}
+.form .btn{width:100%;margin-top:20px}
+.form-note{margin-top:12px;font-family:var(--ff-mono);font-size:11px;color:var(--wall-mute);text-align:center;letter-spacing:.03em}
+
+/* ============================================================ RODAPÉ */
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--ink-mute)}
+.foot{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;font-size:14px}
+.foot a{color:var(--ink-soft);text-decoration:none}
+.foot a:hover{color:var(--cyan-deep)}
+.foot-links{display:flex;gap:20px;flex-wrap:wrap}
+
+/* ============================================================ WHATSAPP FIXO */
+.fab{position:fixed;right:22px;bottom:22px;z-index:70;display:inline-flex;align-items:center;gap:10px;background:var(--green-bright);color:#062B14;text-decoration:none;padding:13px 20px;border-radius:999px;font-weight:600;font-size:15px;box-shadow:0 10px 26px -12px rgba(11,15,18,.55);transition:background .15s}
+.fab:hover{background:#1EBE5C}
+.fab svg{width:20px;height:20px;fill:currentColor}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:12px;z-index:100;background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px}
+
+/* ============================================================ RESPONSIVO */
+@media (max-width:1080px){
+  .vgrid{grid-template-columns:repeat(4,1fr)}
+  .vgrid.c4{grid-template-columns:repeat(3,1fr)}
+  .data{grid-template-columns:repeat(2,1fr)}
+  .data-i:nth-child(2){border-right:0}
+  .data-i:nth-child(1),.data-i:nth-child(2){border-bottom:1px solid var(--wall-line)}
+}
+@media (max-width:900px){
+  .hero-in,.niche,.price,.about,.contact,.cta{grid-template-columns:1fr}
+  .niche.flip > .niche-txt{order:0}
+  .steps{grid-template-columns:1fr}
+  .step{border-right:0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:0}
+  .faq{grid-template-columns:1fr}
+  .trio{max-width:430px;width:100%;justify-self:center}
+}
+@media (max-width:760px){
+  body{font-size:16px}
+  .nav-in{height:60px;gap:12px}
+  .tabs{position:fixed;left:0;right:0;top:60px;flex-direction:column;gap:0;margin:0;background:#fff;border-bottom:1px solid var(--line);padding:8px}
+  .tabs[data-open="false"]{display:none}
+  .tab{text-align:left;border-radius:6px;padding:13px 14px;font-size:16px}
+  .burger{display:block;margin-left:auto}
+  .nav-cta span{display:none}
+  .nav-cta{padding:11px 13px}
+  .vgrid,.vgrid.c4{grid-template-columns:repeat(2,1fr);gap:10px}
+  .vgrid.wide{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr}
+  .fab span{display:none}
+  .fab{padding:14px;right:14px;bottom:14px}
+  .data-i{padding:20px 18px 22px}
+  .spec dt{width:88px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Ir para o conteúdo</a>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#" data-go="home">Ju<i>Ca</i>IA</a>
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1h16M1 7h16M1 13h16"/></svg>
+    </button>
+    <nav class="tabs" id="tabs" role="tablist" data-open="false" aria-label="Navegação principal">
+      <button class="tab" role="tab" data-go="home" aria-selected="true">Início</button>
+      <button class="tab" role="tab" data-go="portfolio" aria-selected="false">Portfólio</button>
+      <button class="tab" role="tab" data-go="contato" aria-selected="false">Sobre &amp; Contato</button>
+    </nav>
+    <a class="nav-cta" id="navWa" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.5.3-.7.3-1.3.2-1.5 0-.1-.2-.2-.5-.3zM12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+      <span>Pedir orçamento</span>
+    </a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ==================================================================== -->
+<!-- ABA 1 — INÍCIO                                                        -->
+<!-- ==================================================================== -->
+<div class="panel" id="panel-home" role="tabpanel">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-in">
+      <div>
+        <span class="lbl">Produtora de vídeo com IA</span>
+        <h1>Vídeo de produto que segura o cliente no anúncio.</h1>
+        <p class="hero-sub">
+          Gastronomia, marcas e e-commerce. Você manda as fotos e o link;
+          devolvemos o vídeo pronto para Shopee, Mercado Livre, TikTok Shop,
+          Amazon e Meta Ads — sem estúdio e sem enviar o produto.
+        </p>
+        <div class="price-tag">
+          <b>A partir de R$&nbsp;250</b>
+          <span>por vídeo · entrega em 72h</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-wa" data-wa="Olá! Vi o site da JuCaIA e quero um orçamento de vídeo para o meu produto." href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.5.3-.7.3-1.3.2-1.5 0-.1-.2-.2-.5-.3zM12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+            Pedir orçamento no WhatsApp
+          </a>
+          <button class="btn btn-line" data-go="portfolio">Ver o portfólio</button>
+        </div>
+        <p class="hero-note">Resposta no mesmo dia útil · Sem reunião para receber o valor</p>
+      </div>
+
+      <div class="trio" id="heroTrio" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- DADOS DE MERCADO -->
+  <section class="wall">
+    <div class="wrap">
+      <span class="lbl">Por que vídeo</span>
+      <div class="data" style="margin-top:26px">
+        <div class="data-i">
+          <div class="data-n">85%</div>
+          <div class="data-t">das pessoas já foram convencidas a comprar um produto assistindo a um vídeo</div>
+          <div class="data-s">Wyzowl · 2026</div>
+        </div>
+        <div class="data-i">
+          <div class="data-n">61%</div>
+          <div class="data-t">apontam imagem e vídeo como o elemento mais decisivo da página do produto</div>
+          <div class="data-s">Salsify Consumer Research · 2026</div>
+        </div>
+        <div class="data-i">
+          <div class="data-n">63%</div>
+          <div class="data-t">preferem um vídeo curto para conhecer um produto — contra 12% que preferem texto</div>
+          <div class="data-s">Wyzowl · 2026</div>
+        </div>
+        <div class="data-i">
+          <div class="data-n">2,7%</div>
+          <div class="data-t">de engajamento no Reels, contra 1,3% de uma imagem estática</div>
+          <div class="data-s">Dash Social benchmarks</div>
+        </div>
+      </div>
+      <p class="sources">
+        Dados públicos de mercado — não são resultados de clientes da JuCaIA. Fontes:
+        <a href="https://wyzowl.com/video-marketing-statistics/" target="_blank" rel="noopener">Wyzowl, Video Marketing Statistics 2026</a> ·
+        <a href="https://www.shopify.com/blog/video-marketing-statistics" target="_blank" rel="noopener">Shopify (Salsify e Dash Social), 2026</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- NICHOS -->
+  <section>
+    <div class="wrap">
+      <div class="shead">
+        <span class="lbl">Três nichos</span>
+        <h2>Cada mercado pede uma direção diferente.</h2>
+        <p>O pipeline é o mesmo. O que muda é o que o vídeo precisa provar: apetite, desejo de marca ou funcionamento do produto.</p>
+      </div>
+
+      <!-- GASTRONOMIA -->
+      <article class="niche">
+        <div class="niche-txt">
+          <span class="lbl">Gastronomia</span>
+          <h3>Comida precisa dar fome antes de dar informação.</h3>
+          <p>Restaurante, delivery, produtor artesanal e marca de alimento. O trabalho aqui é textura, vapor e o gesto de quem cozinha — não a ficha técnica.</p>
+          <ul class="niche-list">
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Prato em close, câmera lenta e luz quente</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Personagem e cozinha construídos do zero</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Vertical para iFood, Instagram e cardápio digital</span></li>
+          </ul>
+          <a class="niche-cta" data-wa="Olá! Sou do ramo de gastronomia e quero um orçamento de vídeo." href="#" target="_blank" rel="noopener">Pedir orçamento para gastronomia →</a>
+        </div>
+        <div class="vgrid solo" id="nicheGastro"></div>
+      </article>
+
+      <!-- MARCAS -->
+      <article class="niche flip">
+        <div class="niche-txt">
+          <span class="lbl">Marcas</span>
+          <h3>Quando o produto já é conhecido, o que se vende é conceito.</h3>
+          <p>Campanha, lançamento e reposicionamento. Aqui o vídeo não explica o produto — ele constrói o mundo em volta dele.</p>
+          <ul class="niche-list">
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Roteiro com ideia central, não lista de benefícios</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Direção de arte alinhada ao manual da marca</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Locução em PT-BR ou no idioma da campanha</span></li>
+          </ul>
+          <a class="niche-cta" data-wa="Olá! Tenho uma marca e quero um orçamento de vídeo de campanha." href="#" target="_blank" rel="noopener">Pedir orçamento para marca →</a>
+        </div>
+        <div class="vgrid wide" id="nicheMarca"></div>
+      </article>
+
+      <!-- E-COMMERCE -->
+      <article class="niche">
+        <div class="niche-txt">
+          <span class="lbl">E-commerce</span>
+          <h3>No marketplace, o vídeo responde a dúvida que trava a compra.</h3>
+          <p>Seller, importador e marca própria. É onde está a maior parte do portfólio: 49 vídeos de produto, com linhas inteiras produzidas no mesmo padrão.</p>
+          <ul class="niche-list">
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Escala, montagem e uso real — o que a foto não mostra</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Lote com padrão visual único para a linha inteira</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Entrega com e sem legenda, para o mudo do marketplace</span></li>
+          </ul>
+          <a class="niche-cta" data-wa="Olá! Vendo em marketplace e quero um orçamento de vídeo para os meus produtos." href="#" target="_blank" rel="noopener">Pedir orçamento para e-commerce →</a>
+        </div>
+        <div class="vgrid c4" id="nicheEcom"></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="tint">
+    <div class="wrap">
+      <div class="shead">
+        <span class="lbl">Como funciona</span>
+        <h2>Três passos entre o seu link e o vídeo no ar.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">PASSO 01</div>
+          <h3>Você manda o material</h3>
+          <p>Fotos do produto, o link da página e uma frase sobre o que precisa aparecer. Quantas fotos depende do item — a gente diz na conversa do orçamento.</p>
+          <span class="step-t">≈ 10 minutos do seu tempo</span>
+        </div>
+        <div class="step">
+          <div class="step-n">PASSO 02</div>
+          <h3>Roteiro e primeira versão</h3>
+          <p>Você aprova o roteiro por escrito antes de qualquer imagem ser gerada. Depois recebe a primeira versão para conferir.</p>
+          <span class="step-t">24 a 48 horas</span>
+        </div>
+        <div class="step">
+          <div class="step-n">PASSO 03</div>
+          <h3>Entrega e ajustes</h3>
+          <p>Você recebe o vídeo com e sem legenda. Uma rodada de ajuste grátis — corte, ritmo, texto, locução.</p>
+          <span class="step-t">72 horas no total</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREÇO -->
+  <section>
+    <div class="wrap">
+      <div class="shead">
+        <span class="lbl">Preço</span>
+        <h2>R$ 250 é o piso, e ele já entrega vídeo publicável.</h2>
+        <p>Esse é o valor do vídeo com voz off e sem lip sync. Qualquer outro formato tem orçamento próprio — são vários fatores em jogo, e o mais rápido é mandar o produto no WhatsApp.</p>
+      </div>
+      <div class="price">
+        <div class="price-card">
+          <div class="from">A partir de</div>
+          <div class="val">R$ 250 <small>/ vídeo</small></div>
+          <ul>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Vídeo com voz off, sem lip sync</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Versão com legenda e versão sem legenda</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Trilha de uso livre</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Uma rodada de ajuste grátis</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Cessão total de uso — o vídeo é seu, sem prazo</span></li>
+          </ul>
+          <a class="btn btn-wa" data-wa="Olá! Quero um vídeo a partir de R$ 250. Segue o link do meu produto: " href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.5.3-.7.3-1.3.2-1.5 0-.1-.2-.2-.5-.3zM12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+            Fechar pelo WhatsApp
+          </a>
+        </div>
+
+        <div>
+          <dl style="margin:0">
+            <div class="spec"><dt>Legenda</dt><dd>Com legenda e sem legenda<small>As duas versões na mesma entrega — marketplace roda no mudo.</small></dd></div>
+            <div class="spec"><dt>Locução</dt><dd>PT-BR ou outro idioma da sua escolha<small>Voz off no valor de entrada; lip sync é orçado à parte.</small></dd></div>
+            <div class="spec"><dt>Trilha</dt><dd>De uso livre<small>Sem risco de bloqueio por direitos de áudio.</small></dd></div>
+            <div class="spec"><dt>Ajustes</dt><dd>Uma rodada grátis<small>Corte, ritmo, texto, locução e enquadramento.</small></dd></div>
+          </dl>
+          <p class="plus">
+            <b>Por que não há tabela:</b> o valor final depende de vários fatores — duração, número de
+            cenas, tipo de locução, lip sync, personagem, complexidade do produto. Uma tabela fixa ou
+            cobraria a mais de quem precisa de pouco, ou prometeria o que não dá para entregar.
+            Manda o produto no WhatsApp que o orçamento sai fechado.
+          </p>
+          <p class="plus">
+            <b>Desconto:</b> a partir de 10 vídeos no mesmo pedido o preço unitário cai —
+            manda a lista de SKUs que a conta volta pronta.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="tint">
+    <div class="wrap">
+      <div class="shead">
+        <span class="lbl">Antes de fechar</span>
+        <h2>O que todo cliente pergunta.</h2>
+      </div>
+      <div class="faq">
+        <details class="q" open>
+          <summary>Preciso enviar o produto físico?</summary>
+          <div class="a">Não. Trabalhamos a partir de fotos. Quantas e quais depende do produto: itens simples resolvem com as imagens do próprio anúncio, outros pedem mais ângulos e detalhes. Na conversa do orçamento a gente diz exatamente o que precisa.</div>
+        </details>
+        <details class="q">
+          <summary>O vídeo mostra o meu produto ou algo parecido?</summary>
+          <div class="a">O seu. O pipeline parte das suas fotos, então cor, proporção, rótulo e formato são os do produto real. O que é gerado é o entorno: cenário, iluminação, movimento de câmera e as pessoas em cena.</div>
+        </details>
+        <details class="q">
+          <summary>De quem são os direitos do vídeo?</summary>
+          <div class="a">Seus, integralmente e sem prazo. Pode usar em marketplace, tráfego pago, TV, PDV e material de revenda. As trilhas que usamos são de uso livre, então não há risco de bloqueio por direitos de áudio.</div>
+        </details>
+        <details class="q">
+          <summary>E se eu não gostar do resultado?</summary>
+          <div class="a">Você aprova o roteiro escrito antes de qualquer produção. Depois da primeira versão há uma rodada de ajuste grátis — corte, ritmo, texto, locução e enquadramento. Mudança de conceito conta como vídeo novo.</div>
+        </details>
+        <details class="q">
+          <summary>Dá para fazer um lote de SKUs?</summary>
+          <div class="a">É o formato mais pedido. O portfólio tem linhas completas — pulverizadores, boias, barracas — produzidas exatamente assim, com padrão visual único. A partir de 10 vídeos no mesmo pedido o preço unitário cai.</div>
+        </details>
+        <details class="q">
+          <summary>Serve como criativo para Meta e TikTok Ads?</summary>
+          <div class="a">Sim. Para campanha, o recomendado é pedir de 3 a 5 variações do mesmo produto, com ganchos diferentes, e deixar o algoritmo escolher. Sai mais barato que um criativo único e rende teste real.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="wall">
+    <div class="wrap cta">
+      <div>
+        <span class="lbl">Próximo passo</span>
+        <h2 style="margin-top:16px">Manda o link de um produto. O orçamento volta hoje.</h2>
+        <p>Sem formulário longo e sem reunião de descoberta. Um link e uma foto já bastam para dizer prazo e valor.</p>
+      </div>
+      <div class="cta-side">
+        <a class="btn btn-wa" data-wa="Olá! Segue o link do meu produto para orçamento: " href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.5.3-.7.3-1.3.2-1.5 0-.1-.2-.2-.5-.3zM12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+          Falar no WhatsApp
+        </a>
+        <button class="btn btn-line" data-go="contato">Preencher o briefing</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ABA 2 — PORTFÓLIO                                                     -->
+<!-- ==================================================================== -->
+<div class="panel" id="panel-portfolio" role="tabpanel" hidden>
+  <section class="wall">
+    <div class="wrap">
+      <div class="shead">
+        <span class="lbl">Portfólio · <span id="totalCount">52</span> vídeos</span>
+        <h2>Da tigela temperada ao pulverizador de 20 litros.</h2>
+        <p>Todo vídeo abaixo foi feito a partir de fotos do produto. Filtre pelo nicho ou pela categoria mais próxima do seu.</p>
+      </div>
+
+      <div class="filters" id="filters" role="group" aria-label="Filtrar portfólio"></div>
+
+      <div class="vgrid wide" id="gridWide" style="margin-top:24px"></div>
+      <div class="vgrid" id="gridAll" style="margin-top:24px"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cta">
+      <div>
+        <span class="lbl">Seu produto aqui</span>
+        <h2 style="margin-top:16px">Achou algo parecido com o que você vende?</h2>
+        <p style="color:var(--ink-soft)">Manda o link desse vídeo junto com o do seu produto. É a forma mais rápida de a gente entender a referência que você quer.</p>
+      </div>
+      <div class="cta-side">
+        <a class="btn btn-wa" data-wa="Olá! Vi o portfólio da JuCaIA e quero algo parecido para o meu produto." href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.5.3-.7.3-1.3.2-1.5 0-.1-.2-.2-.5-.3zM12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+          Pedir orçamento
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ABA 3 — SOBRE & CONTATO                                               -->
+<!-- ==================================================================== -->
+<div class="panel" id="panel-contato" role="tabpanel" hidden>
+
+  <section>
+    <div class="wrap">
+      <div class="shead">
+        <span class="lbl">Sobre a JuCaIA</span>
+        <h2>Uma produtora que trabalha no ritmo do e-commerce.</h2>
+      </div>
+      <div class="about">
+        <div>
+          <p class="lead">A JuCaIA é uma produtora especializada na criação de vídeos publicitários para redes sociais e marketplaces utilizando Inteligência Artificial Generativa.</p>
+          <p>Nascemos de uma constatação simples: o vídeo se tornou essencial para vender online, mas a produção tradicional continua cara, lenta e difícil de escalar.</p>
+          <p>Para um seller com dezenas de SKUs, produzir um vídeo para cada produto pode significar semanas de trabalho, altos custos com estúdio, locação, equipamentos, modelos e equipe. Para importadores e distribuidores que renovam seus catálogos constantemente, esse modelo simplesmente não acompanha a velocidade do e-commerce.</p>
+          <p>Foi por isso que criamos uma nova forma de produzir.</p>
+          <blockquote class="pull">Em vez de levar o produto até o set, levamos o set até o produto.</blockquote>
+          <p>A partir das imagens reais do item, utilizamos IA generativa para criar cenários, iluminação, movimentos de câmera, ambientes, modelos e situações de uso, transformando fotos de catálogo em vídeos publicitários prontos para vender.</p>
+          <p>Mas tecnologia, sozinha, não cria uma boa propaganda.</p>
+          <p>Por trás de cada produção existe experiência em audiovisual aplicada ao que realmente importa: <strong>roteiro, gancho nos primeiros segundos, direção de arte, ritmo, montagem, som e apresentação dos benefícios do produto.</strong></p>
+          <p>A IA acelera e reduz o custo das etapas mais complexas da produção. A direção humana transforma essa tecnologia em publicidade.</p>
+          <p>Por isso, nossos vídeos não seguem uma fórmula visual única. Cada produto, público e nicho recebe uma abordagem própria — de vídeos demonstrativos para marketplaces a criativos mais dinâmicos para redes sociais.</p>
+          <p>A JuCaIA une audiovisual, publicidade e Inteligência Artificial para transformar catálogos de produtos em conteúdo de venda, com mais velocidade, escala e liberdade criativa.</p>
+        </div>
+        <div class="pillars">
+          <div class="pillar"><h3>Prazo é entregável</h3><p>72 horas é o padrão, não o melhor caso. Se um lote não couber nesse prazo, você é avisado antes de fechar.</p></div>
+          <div class="pillar"><h3>Roteiro antes de render</h3><p>Você lê e aprova o texto antes de qualquer imagem ser gerada. É o que impede retrabalho dos dois lados.</p></div>
+          <div class="pillar"><h3>Sem assinatura no material</h3><p>Nenhuma marca d'água, nenhum crédito obrigatório. Agências recebem o arquivo limpo.</p></div>
+          <div class="pillar"><h3>Fidelidade ao produto real</h3><p>Nada de inventar função que o produto não tem. O vídeo precisa sobreviver à chegada da encomenda.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wall">
+    <div class="wrap">
+      <div class="shead">
+        <span class="lbl">Contato</span>
+        <h2>Fale direto com quem produz.</h2>
+        <p>Sem atendimento intermediário. Segunda a sexta, das 9h às 19h (horário de Brasília), com resposta no mesmo dia útil.</p>
+      </div>
+
+      <div class="contact">
+        <div>
+          <div class="ch-list">
+            <a class="ch" id="chWa" href="#" target="_blank" rel="noopener">
+              <span class="ch-ic"><svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.5.3-.7.3-1.3.2-1.5 0-.1-.2-.2-.5-.3zM12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></span>
+              <span><b>WhatsApp</b><span id="waLabel">+55 11 92648-8982</span></span>
+            </a>
+            <a class="ch" id="chMail" href="#">
+              <span class="ch-ic"><svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1.6 1L12 10.6 19.4 6H4.6zM3 7.2V18h18V7.2l-9 5.6-9-5.6z"/></svg></span>
+              <span><b>E-mail</b><span id="mailLabel">contatojucaia@gmail.com</span></span>
+            </a>
+            <div class="ch" style="cursor:default">
+              <span class="ch-ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6V17h-2v-4.4H8.4L12 8.6l3.6 4H13z"/></svg></span>
+              <span><b>Atendimento</b><span>Seg a Sex · 9h às 19h (BRT)</span></span>
+            </div>
+          </div>
+        </div>
+
+        <form class="form" id="brief" novalidate>
+          <h3>Briefing rápido</h3>
+          <p>Seis campos, só dois obrigatórios. Ao enviar, abrimos o WhatsApp com tudo já escrito — você confere e aperta enviar.</p>
+          <div class="fgrid">
+            <div class="field">
+              <label for="f-nome">Seu nome</label>
+              <input id="f-nome" name="nome" type="text" placeholder="Como te chamamos" required />
+            </div>
+            <div class="field">
+              <label for="f-nicho">Nicho</label>
+              <select id="f-nicho" name="nicho">
+                <option>E-commerce / marketplace</option>
+                <option>Gastronomia</option>
+                <option>Marca / campanha</option>
+                <option>Agência</option>
+                <option>Outro</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="f-produto">Produto e link do anúncio</label>
+              <input id="f-produto" name="produto" type="text" placeholder="Ex.: Pulverizador 20L elétrico — shopee.com.br/..." required />
+            </div>
+            <div class="field">
+              <label for="f-qtd">Quantos vídeos</label>
+              <select id="f-qtd" name="qtd">
+                <option>1 vídeo</option>
+                <option>2 a 5 vídeos</option>
+                <option>6 a 10 vídeos</option>
+                <option>Mais de 10 (lote)</option>
+                <option>Ainda não sei</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-prazo">Prazo</label>
+              <select id="f-prazo" name="prazo">
+                <option>Padrão — até 72h</option>
+                <option>Esta semana</option>
+                <option>Sem pressa</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="f-obs">O que precisa aparecer (opcional)</label>
+              <textarea id="f-obs" name="obs" placeholder="Ex.: mostrar a bateria removível e o alcance do jato"></textarea>
+            </div>
+          </div>
+          <button class="btn btn-wa" type="submit">
+            <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.5.3-.7.3-1.3.2-1.5 0-.1-.2-.2-.5-.3zM12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+            Enviar briefing pelo WhatsApp
+          </button>
+          <p class="form-note">Nada é armazenado neste site. O texto vai direto para a conversa.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>© <span id="yr">2026</span> JuCaIA · Produção de vídeo com IA</div>
+    <div class="foot-links">
+      <a href="#" data-go="home">Início</a>
+      <a href="#" data-go="portfolio">Portfólio</a>
+      <a href="#" data-go="contato">Sobre &amp; Contato</a>
+      <a href="#" id="footWa" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<a class="fab" id="fab" href="#" target="_blank" rel="noopener" aria-label="Pedir orçamento no WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.5.3-.7.3-1.3.2-1.5 0-.1-.2-.2-.5-.3zM12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+  <span>Orçamento</span>
+</a>
+
+<script>
+/* ============================================================
+   CONFIG — edite apenas este bloco
+   ============================================================ */
+const CONFIG = {
+  whatsapp: "5511926488982",            // só dígitos, com DDI 55
+  whatsappLabel: "+55 11 92648-8982",
+  email: "contatojucaia@gmail.com",   // e-mail de contato
+  mensagemPadrao: "Olá! Vim pelo site da JuCaIA e quero um orçamento de vídeo."
+};
+
+/* ============================================================
+   CATÁLOGO — 52 vídeos
+   nicho: gastro | marca | ecom        cat: subcategoria de produto
+   ============================================================ */
+const VIDEOS = [
+  /* --- GASTRONOMIA --- */
+  {id:"IeJituu-3-c", t:"Chef Kofi preparando waakye", nicho:"gastro", cat:"gastro", wide:true},
+
+  /* --- MARCAS --- */
+  {id:"sMNemGq93qc", t:"Campanha de tênis — conceito", nicho:"marca", cat:"marca", wide:true},
+  {id:"aC_MBT7Y_pI", t:"Tigela temperada — do forno ao congelador", nicho:"marca", cat:"marca", wide:true},
+
+  /* --- E-COMMERCE · casa & organização --- */
+  {id:"NTyRoIGthA8", t:"Carrinho Organizador",             nicho:"ecom", cat:"casa"},
+  {id:"DfHobTc_mMg", t:"Lixeira 20L",                      nicho:"ecom", cat:"casa"},
+  {id:"ipKmCs-mhII", t:"Lixeira com Sensor 14L",           nicho:"ecom", cat:"casa"},
+  {id:"QJLJRRkf8AM", t:"Secador de Mãos",                  nicho:"ecom", cat:"casa"},
+  {id:"aYApy3jfEoM", t:"Porta 4 Relógios",                 nicho:"ecom", cat:"casa"},
+  {id:"9h2S6ZLkfKQ", t:"Sofá Cama Inflável",               nicho:"ecom", cat:"casa"},
+  {id:"6z7KrXgr2G4", t:"Armadilha de Moscas",              nicho:"ecom", cat:"casa"},
+  {id:"K4OtzTIRXD0", t:"Saco a Vácuo",                     nicho:"ecom", cat:"casa"},
+  {id:"7lRZHBpWwPI", t:"Mesa Dobrável",                    nicho:"ecom", cat:"casa"},
+  {id:"9IzoY5aL7Z0", t:"Mesa Ajustável",                   nicho:"ecom", cat:"casa"},
+  {id:"jhHsfFX_Nhk", t:"Prateleira Máquina de Lavar",      nicho:"ecom", cat:"casa"},
+  {id:"v1655jolOAo", t:"Guilhotina 400 Folhas",            nicho:"ecom", cat:"casa"},
+  {id:"3iRcYE5zeN8", t:"Inflador de Bexiga",               nicho:"ecom", cat:"casa"},
+
+  /* --- E-COMMERCE · jardim & ferramentas --- */
+  {id:"CDokGpG-vk8", t:"Tanque de Pressão 10L com Pistola",nicho:"ecom", cat:"jardim"},
+  {id:"Q__Wc-yByLI", t:"Esmerilhadeira",                   nicho:"ecom", cat:"jardim"},
+  {id:"9S-zxbYvy-8", t:"Misturador de Argamassa",          nicho:"ecom", cat:"jardim"},
+  {id:"dVQ2lxFxTmQ", t:"Pulverizador Solar 20L",           nicho:"ecom", cat:"jardim"},
+  {id:"XLTWuVRATkI", t:"Pulverizador 20L Manual",          nicho:"ecom", cat:"jardim"},
+  {id:"pNJK_rZUT6Y", t:"Pulverizador 5L Elétrico",         nicho:"ecom", cat:"jardim"},
+  {id:"vI6laRKQWrI", t:"Pulverizador 20L Elétrico",        nicho:"ecom", cat:"jardim"},
+  {id:"7lSPvnttn-A", t:"Pulverizador 5L Manual",           nicho:"ecom", cat:"jardim"},
+  {id:"vHsifI8ViHE", t:"Pulverizador Manual 2L",           nicho:"ecom", cat:"jardim"},
+  {id:"VRuX2VtUuK0", t:"Chafariz Aerador",                 nicho:"ecom", cat:"jardim"},
+  {id:"Dgm63lMjVQw", t:"Cinto Roçadeira",                  nicho:"ecom", cat:"jardim"},
+
+  /* --- E-COMMERCE · lazer & piscina --- */
+  {id:"H0Itz5oAnfU", t:"Piscina 6800L",                    nicho:"ecom", cat:"lazer"},
+  {id:"KhjXp9vDC-A", t:"Toboágua",                         nicho:"ecom", cat:"lazer"},
+  {id:"RvmP6k2_Hcg", t:"Deck Bege e Branco",               nicho:"ecom", cat:"lazer"},
+  {id:"MaF8WIsKE70", t:"Boia Deck",                        nicho:"ecom", cat:"lazer"},
+  {id:"JooQpn9LZGA", t:"Ilha Boia",                        nicho:"ecom", cat:"lazer"},
+  {id:"vTlMW4Do3oM", t:"Boia Trampolim",                   nicho:"ecom", cat:"lazer"},
+  {id:"0_5YCKvse7U", t:"Boia Azul Redonda",                nicho:"ecom", cat:"lazer"},
+  {id:"j6HNbkjqB9E", t:"Boia Rede",                        nicho:"ecom", cat:"lazer"},
+
+  /* --- E-COMMERCE · esporte & outdoor --- */
+  {id:"IrHnqyFWexo", t:"Detector de Metais",               nicho:"ecom", cat:"outdoor"},
+  {id:"HbkOtmflejc", t:"Esteira Ergonômica",               nicho:"ecom", cat:"outdoor"},
+  {id:"w8f6cPKFpZU", t:"Cesta de Basketball Regulável",    nicho:"ecom", cat:"outdoor"},
+  {id:"-mViI7ap7I4", t:"Colchão Inflável Camping",         nicho:"ecom", cat:"outdoor"},
+  {id:"UahbHlYDHl8", t:"Rede Vôlei",                       nicho:"ecom", cat:"outdoor"},
+  {id:"Q5agIMsSNss", t:"Máscara de Mergulho",              nicho:"ecom", cat:"outdoor"},
+  {id:"TAB1R-HaVrw", t:"Barraca Laranja",                  nicho:"ecom", cat:"outdoor"},
+  {id:"xHXgEgHxTt0", t:"Barraca Azul 2 Pessoas",           nicho:"ecom", cat:"outdoor"},
+  {id:"w1PZBpaxeX0", t:"Stand Up Paddle 274cm",            nicho:"ecom", cat:"outdoor"},
+  {id:"fHr3kn9JPjE", t:"Mochila Infantil 45L",             nicho:"ecom", cat:"outdoor"},
+
+  /* --- E-COMMERCE · pet --- */
+  {id:"8mu1tzqjdOw", t:"Cadeira Pet para Carros",          nicho:"ecom", cat:"pet"},
+  {id:"bwMFU11s6Jo", t:"Mala de Transporte Pet",           nicho:"ecom", cat:"pet"},
+
+  /* --- E-COMMERCE · infantil --- */
+  {id:"E_wMxjVx6pU", t:"Carrinho de Boneca",               nicho:"ecom", cat:"kids"},
+  {id:"KzC8ktq3rxM", t:"Tapete Infantil Dobrável",         nicho:"ecom", cat:"kids"},
+  {id:"LBZV_6DJ3Yo", t:"Avião Drone",                      nicho:"ecom", cat:"kids"},
+
+  /* --- E-COMMERCE · auto --- */
+  {id:"5YGmpdBu3us", t:"Mini Bomba de Ar Elétrica",        nicho:"ecom", cat:"auto"},
+  {id:"LaaaHGxBNrg", t:"Auxiliar de Partida",              nicho:"ecom", cat:"auto"}
+];
+
+const NICHOS = { gastro:"Gastronomia", marca:"Marcas", ecom:"E-commerce" };
+const CATS = {
+  gastro:"Gastronomia", marca:"Marca",
+  casa:"Casa", jardim:"Jardim", lazer:"Lazer",
+  outdoor:"Outdoor", pet:"Pet", kids:"Infantil", auto:"Auto"
+};
+
+/* ============================================================
+   WHATSAPP
+   ============================================================ */
+const waLink = (msg) =>
+  "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg || CONFIG.mensagemPadrao);
+
+document.querySelectorAll("[data-wa]").forEach(function(el){ el.href = waLink(el.getAttribute("data-wa")); });
+["navWa","fab","footWa","chWa"].forEach(function(id){ var el = document.getElementById(id); if (el) el.href = waLink(); });
+document.getElementById("waLabel").textContent = CONFIG.whatsappLabel;
+var mail = document.getElementById("chMail");
+mail.href = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent("Orçamento de vídeo — JuCaIA");
+document.getElementById("mailLabel").textContent = CONFIG.email;
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+/* ============================================================
+   MINIATURAS — cadeia de fallback
+   O YouTube nem sempre gera maxresdefault (sobretudo em Shorts) e às vezes
+   devolve um placeholder cinza de 120px em vez de erro. Percorremos as
+   variantes até uma imagem real carregar; se nenhuma vier, o cartão assume
+   um estado próprio em vez de exibir ícone de imagem quebrada.
+   ============================================================ */
+function montarThumb(img, id){
+  var fontes = [
+    "https://i.ytimg.com/vi/" + id + "/maxresdefault.jpg",
+    "https://i.ytimg.com/vi/" + id + "/sddefault.jpg",
+    "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg",
+    "https://img.youtube.com/vi/" + id + "/hqdefault.jpg"
+  ];
+  var i = 0;
+  function proxima(){
+    i++;
+    if (i < fontes.length){ img.src = fontes[i]; }
+    else { var box = img.parentElement; if (box) box.classList.add("no-thumb"); }
+  }
+  img.addEventListener("error", proxima);
+  img.addEventListener("load", function(){
+    // placeholder cinza do YouTube tem 120px de largura
+    if (img.naturalWidth && img.naturalWidth <= 120 && i < fontes.length - 1) proxima();
+  });
+  img.referrerPolicy = "no-referrer";
+  img.src = fontes[0];
+}
+
+function card(v){
+  var a = document.createElement("a");
+  a.className = "vcard";
+  a.href = v.wide ? "https://www.youtube.com/watch?v=" + v.id
+                  : "https://youtube.com/shorts/" + v.id;
+  a.target = "_blank";
+  a.rel = "noopener";
+  a.setAttribute("aria-label", "Assistir: " + v.t);
+
+  var box = document.createElement("div");
+  box.className = "vthumb";
+
+  var img = document.createElement("img");
+  img.alt = "";
+  img.loading = "lazy";
+  box.appendChild(img);
+
+  box.insertAdjacentHTML("beforeend",
+    '<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><polygon points="6,4 20,12 6,20"/></svg></span>' +
+    '<span class="ratio">' + (v.wide ? "16:9" : "9:16") + '</span>' +
+    '<div class="vmeta"><h4></h4><span>' + CATS[v.cat] + '</span></div>');
+  box.querySelector(".vmeta h4").textContent = v.t;
+
+  a.appendChild(box);
+  montarThumb(img, v.id);
+  return a;
+}
+
+function fill(el, list){
+  el.textContent = "";
+  if (!list.length){
+    var p = document.createElement("p");
+    p.className = "empty";
+    p.textContent = "Nada nesta categoria ainda — o seu produto pode ser o primeiro.";
+    el.appendChild(p);
+    return;
+  }
+  var frag = document.createDocumentFragment();
+  list.forEach(function(v){ frag.appendChild(card(v)); });
+  el.appendChild(frag);
+}
+
+function porNicho(n){ return VIDEOS.filter(function(v){ return v.nicho === n; }); }
+function porId(id){ return VIDEOS.filter(function(v){ return v.id === id; })[0]; }
+
+/* --- blocos de nicho na home --- */
+fill(document.getElementById("nicheGastro"), porNicho("gastro"));
+fill(document.getElementById("nicheMarca"),  porNicho("marca"));
+fill(document.getElementById("nicheEcom"),
+     ["5YGmpdBu3us","8mu1tzqjdOw","CDokGpG-vk8","H0Itz5oAnfU"].map(porId).filter(Boolean));
+
+/* --- trio do hero --- */
+var trio = document.getElementById("heroTrio");
+["IrHnqyFWexo","8mu1tzqjdOw","dVQ2lxFxTmQ"].forEach(function(id){
+  var v = porId(id);
+  if (v) trio.appendChild(card(v));
+});
+
+/* ============================================================
+   PORTFÓLIO
+   ============================================================ */
+document.getElementById("totalCount").textContent = VIDEOS.length;
+var gridAll  = document.getElementById("gridAll");
+var gridWide = document.getElementById("gridWide");
+var filters  = document.getElementById("filters");
+
+function chip(key, label, count, active){
+  var b = document.createElement("button");
+  b.className = "chip";
+  b.type = "button";
+  b.dataset.f = key;
+  b.setAttribute("aria-pressed", active ? "true" : "false");
+  b.innerHTML = label + '<span class="c">' + count + '</span>';
+  return b;
+}
+filters.appendChild(chip("all", "Todos", VIDEOS.length, true));
+Object.keys(NICHOS).forEach(function(n){
+  filters.appendChild(chip("n:" + n, NICHOS[n], porNicho(n).length, false));
+});
+var sep = document.createElement("span");
+sep.className = "fsep";
+sep.setAttribute("aria-hidden", "true");
+filters.appendChild(sep);
+["casa","jardim","lazer","outdoor","pet","kids","auto"].forEach(function(c){
+  var n = VIDEOS.filter(function(v){ return v.cat === c; }).length;
+  if (n) filters.appendChild(chip("c:" + c, CATS[c], n, false));
+});
+
+function aplicaFiltro(f){
+  filters.querySelectorAll(".chip").forEach(function(c){
+    c.setAttribute("aria-pressed", c.dataset.f === f ? "true" : "false");
+  });
+
+  var lista;
+  if (f === "all")                lista = VIDEOS;
+  else if (f.indexOf("n:") === 0) lista = VIDEOS.filter(function(v){ return v.nicho === f.slice(2); });
+  else                            lista = VIDEOS.filter(function(v){ return v.cat === f.slice(2); });
+
+  /* 16:9 e 9:16 vivem em grades separadas para não sofrerem corte */
+  var wides = lista.filter(function(v){ return v.wide; });
+  var verts = lista.filter(function(v){ return !v.wide; });
+  gridWide.hidden = !wides.length; if (wides.length) fill(gridWide, wides);
+  gridAll.hidden  = !verts.length; if (verts.length) fill(gridAll, verts);
+}
+filters.addEventListener("click", function(e){
+  var b = e.target.closest(".chip");
+  if (b) aplicaFiltro(b.dataset.f);
+});
+aplicaFiltro("all");
+
+/* ============================================================
+   ABAS
+   ============================================================ */
+var VALID = ["home","portfolio","contato"];
+var tabsEl = document.getElementById("tabs");
+var burger = document.getElementById("burger");
+
+function irPara(nome, push){
+  if (VALID.indexOf(nome) === -1) nome = "home";
+  VALID.forEach(function(n){ document.getElementById("panel-" + n).hidden = (n !== nome); });
+  document.querySelectorAll(".tab").forEach(function(t){
+    t.setAttribute("aria-selected", t.dataset.go === nome ? "true" : "false");
+  });
+  if (push !== false && location.hash !== "#" + nome) location.hash = nome;
+  window.scrollTo(0, 0);
+  tabsEl.dataset.open = "false";
+  burger.setAttribute("aria-expanded", "false");
+}
+document.addEventListener("click", function(e){
+  var el = e.target.closest("[data-go]");
+  if (!el) return;
+  e.preventDefault();
+  irPara(el.dataset.go);
+});
+window.addEventListener("hashchange", function(){ irPara(location.hash.replace("#",""), false); });
+burger.addEventListener("click", function(){
+  var aberto = tabsEl.dataset.open === "true";
+  tabsEl.dataset.open = aberto ? "false" : "true";
+  burger.setAttribute("aria-expanded", aberto ? "false" : "true");
+});
+irPara(location.hash.replace("#","") || "home", false);
+
+/* ============================================================
+   BRIEFING → WHATSAPP
+   ============================================================ */
+document.getElementById("brief").addEventListener("submit", function(e){
+  e.preventDefault();
+  var f = e.target;
+  var v = function(n){ return (f.elements[n].value || "").trim(); };
+  if (!v("nome") || !v("produto")){
+    var alvo = !v("nome") ? f.elements.nome : f.elements.produto;
+    alvo.focus();
+    alvo.style.borderColor = "#E5484D";
+    setTimeout(function(){ alvo.style.borderColor = ""; }, 2200);
+    return;
+  }
+  var linhas = [
+    "Olá! Briefing pelo site da JuCaIA.",
+    "",
+    "Nome: " + v("nome"),
+    "Nicho: " + v("nicho"),
+    "Produto: " + v("produto"),
+    "Quantidade: " + v("qtd"),
+    "Prazo: " + v("prazo")
+  ];
+  if (v("obs")) linhas.push("Precisa aparecer: " + v("obs"));
+  window.open(waLink(linhas.join("\n")), "_blank", "noopener");
+});
+</script>
+</body>
+</html>
