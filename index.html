@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
 <title>JuCaIA — Vídeo de produto com IA</title>
 <meta name="description" content="Produtora de vídeo com IA para gastronomia, marcas e e-commerce. Vídeo de produto a partir de R$ 250, entregue em 72h, sem estúdio e sem enviar o produto." />
 <meta property="og:title" content="JuCaIA — Vídeo de produto com IA" />
@@ -271,6 +272,42 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--ink-mute)}
 .foot a{color:var(--ink-soft);text-decoration:none}
 .foot a:hover{color:var(--cyan-deep)}
 .foot-links{display:flex;gap:20px;flex-wrap:wrap}
+
+/* ============================================================ PLAYER EM JANELA */
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:clamp(14px,3vw,34px)}
+.modal-bg{position:absolute;inset:0;background:rgba(6,9,11,.88);backdrop-filter:blur(6px)}
+.modal-box{position:relative;z-index:1;display:flex;flex-direction:column;gap:16px;align-items:center;width:max-content;max-width:100%;max-height:100%}
+.modal-stage{background:#000;border-radius:10px;overflow:hidden;box-shadow:0 30px 70px -30px rgba(0,0,0,.9)}
+.modal-stage.v{width:min(92vw,calc(68vh * 9 / 16),420px);aspect-ratio:9/16}
+.modal-stage.h{width:min(94vw,980px,calc(72vh * 16 / 9));aspect-ratio:16/9}
+.modal-stage iframe{width:100%;height:100%;border:0;display:block}
+.modal-foot{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;width:100%}
+.modal-stage.v + .modal-foot{justify-content:center;text-align:center}
+.modal-foot h3{font-size:19px;color:#fff}
+.modal-foot .cat{display:block;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--cyan-bright);margin-top:5px}
+.modal-acts{display:flex;gap:10px;flex-wrap:wrap}
+.modal-acts .btn{padding:12px 20px;font-size:15px}
+.modal-acts .btn-line{border-color:var(--wall-line);color:var(--wall-text);background:transparent}
+.modal-acts .btn-line:hover{border-color:var(--cyan-bright);color:var(--cyan-bright)}
+.modal-x,.modal-nav{
+  position:absolute;z-index:2;display:grid;place-items:center;cursor:pointer;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#fff;
+  border-radius:50%;transition:background .15s,border-color .15s;
+}
+.modal-x:hover,.modal-nav:hover{background:var(--cyan-bright);border-color:var(--cyan-bright);color:var(--wall)}
+.modal-x{position:fixed;top:18px;right:18px;width:38px;height:38px;font-size:21px;line-height:1}
+.modal-nav{top:50%;transform:translateY(-50%);width:42px;height:42px;font-size:24px;line-height:1;padding-bottom:3px}
+.modal-nav.prev{left:calc(-42px - 18px)}
+.modal-nav.next{right:calc(-42px - 18px)}
+.modal-hint{font-family:var(--ff-mono);font-size:11px;letter-spacing:.06em;color:var(--wall-mute);text-align:center}
+@media (max-width:860px){
+  .modal-nav.prev{left:8px}
+  .modal-nav.next{right:8px}
+  .modal-x{top:12px;right:12px}
+  .modal-foot{justify-content:center;text-align:center}
+  .modal-foot h3{font-size:17px}
+  .modal-hint{display:none}
+}
 
 /* ============================================================ WHATSAPP FIXO */
 .fab{position:fixed;right:22px;bottom:22px;z-index:70;display:inline-flex;align-items:center;gap:10px;background:var(--green-bright);color:#062B14;text-decoration:none;padding:13px 20px;border-radius:999px;font-weight:600;font-size:15px;box-shadow:0 10px 26px -12px rgba(11,15,18,.55);transition:background .15s}
@@ -768,6 +805,27 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--ink-mute)}
   </div>
 </footer>
 
+<div class="modal" id="player" hidden role="dialog" aria-modal="true" aria-label="Player de vídeo">
+  <div class="modal-bg" data-fechar="1"></div>
+  <div class="modal-box">
+    <button class="modal-x" id="pFechar" aria-label="Fechar player">&times;</button>
+    <button class="modal-nav prev" id="pPrev" aria-label="Vídeo anterior">&lsaquo;</button>
+    <button class="modal-nav next" id="pNext" aria-label="Próximo vídeo">&rsaquo;</button>
+    <div class="modal-stage" id="pStage"></div>
+    <div class="modal-foot">
+      <div>
+        <h3 id="pTit"></h3>
+        <span class="cat" id="pCat"></span>
+      </div>
+      <div class="modal-acts">
+        <a class="btn btn-wa" id="pWa" href="#" target="_blank" rel="noopener">Quero um vídeo assim</a>
+        <a class="btn btn-line" id="pYt" href="#" target="_blank" rel="noopener">Abrir no YouTube</a>
+      </div>
+    </div>
+    <p class="modal-hint" id="pHint">Use as setas &larr; &rarr; para navegar · Esc para fechar</p>
+  </div>
+</div>
+
 <a class="fab" id="fab" href="#" target="_blank" rel="noopener" aria-label="Pedir orçamento no WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5 0-.2 0-.4-.1-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.5.3-.7.3-1.3.2-1.5 0-.1-.2-.2-.5-.3zM12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-2.9.9.9-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
   <span>Orçamento</span>
@@ -918,6 +976,7 @@ function card(v){
   a.target = "_blank";
   a.rel = "noopener";
   a.setAttribute("aria-label", "Assistir: " + v.t);
+  a.dataset.vid = v.id;
 
   var box = document.createElement("div");
   box.className = "vthumb";
@@ -1019,6 +1078,105 @@ filters.addEventListener("click", function(e){
   if (b) aplicaFiltro(b.dataset.f);
 });
 aplicaFiltro("all");
+
+/* ============================================================
+   PLAYER EM JANELA
+   Abre o vídeo sobre a página em vez de mandar o visitante ao YouTube.
+   O iframe só nasce ao abrir e é destruído ao fechar — é assim que a
+   reprodução realmente para e nenhum vídeo fica tocando escondido.
+   ============================================================ */
+var modal   = document.getElementById("player");
+var pStage  = document.getElementById("pStage");
+var pTit    = document.getElementById("pTit");
+var pCat    = document.getElementById("pCat");
+var pWa     = document.getElementById("pWa");
+var pYt     = document.getElementById("pYt");
+var pPrev   = document.getElementById("pPrev");
+var pNext   = document.getElementById("pNext");
+var listaPlayer = [];
+var idxPlayer = 0;
+var focoAnterior = null;
+
+function montaPlayer(){
+  var v = listaPlayer[idxPlayer];
+  if (!v) return;
+
+  pStage.className = "modal-stage " + (v.wide ? "h" : "v");
+  pStage.textContent = "";
+
+  var f = document.createElement("iframe");
+  // a política de referência vem ANTES do src: sem a origem da página o player
+  // do YouTube recusa a incorporação e devolve "Error 153"
+  f.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+  f.setAttribute("allowfullscreen", "");
+  f.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+  f.title = v.t;
+  f.src = "https://www.youtube-nocookie.com/embed/" + v.id +
+          "?autoplay=1&rel=0&playsinline=1";
+  pStage.appendChild(f);
+
+  pTit.textContent = v.t;
+  pCat.textContent = CATS[v.cat];
+  pYt.href = v.wide ? "https://www.youtube.com/watch?v=" + v.id
+                    : "https://youtube.com/shorts/" + v.id;
+  pWa.href = waLink("Olá! Vi o vídeo \"" + v.t + "\" no site da JuCaIA e quero um orçamento de algo parecido para o meu produto.");
+
+  // aberto como arquivo local não há origem para o YouTube validar: avisa em vez de confundir
+  if (location.protocol === "file:"){
+    var hint = document.getElementById("pHint");
+    if (hint) hint.textContent = "Pré-visualização local: o YouTube bloqueia a incorporação em página aberta do disco (erro 153). No site publicado o vídeo roda normalmente.";
+  }
+
+  var varios = listaPlayer.length > 1;
+  pPrev.hidden = !varios;
+  pNext.hidden = !varios;
+}
+
+function abrePlayer(cardEl){
+  var grid = cardEl.parentElement;
+  var cards = Array.prototype.slice.call(grid.querySelectorAll(".vcard"));
+  listaPlayer = cards.map(function(c){ return porId(c.dataset.vid); }).filter(Boolean);
+  idxPlayer = Math.max(0, cards.indexOf(cardEl));
+  focoAnterior = cardEl;
+  modal.hidden = false;
+  document.body.style.overflow = "hidden";
+  montaPlayer();
+  document.getElementById("pFechar").focus();
+}
+
+function fechaPlayer(){
+  modal.hidden = true;
+  pStage.textContent = "";          // destrói o iframe: para o áudio
+  document.body.style.overflow = "";
+  if (focoAnterior) focoAnterior.focus();
+}
+
+function passaPlayer(d){
+  if (!listaPlayer.length) return;
+  idxPlayer = (idxPlayer + d + listaPlayer.length) % listaPlayer.length;
+  montaPlayer();
+}
+
+/* abre a partir de qualquer cartão, em qualquer grade */
+document.addEventListener("click", function(e){
+  var card = e.target.closest(".vcard");
+  if (!card || !card.dataset.vid) return;
+  e.preventDefault();               // o href continua valendo para abrir em nova aba
+  abrePlayer(card);
+});
+
+document.getElementById("pFechar").addEventListener("click", fechaPlayer);
+pPrev.addEventListener("click", function(){ passaPlayer(-1); });
+pNext.addEventListener("click", function(){ passaPlayer(1); });
+modal.addEventListener("click", function(e){
+  if (e.target.dataset.fechar) fechaPlayer();
+});
+document.addEventListener("keydown", function(e){
+  if (modal.hidden) return;
+  if (e.key === "Escape")     fechaPlayer();
+  if (e.key === "ArrowLeft")  passaPlayer(-1);
+  if (e.key === "ArrowRight") passaPlayer(1);
+});
 
 /* ============================================================
    ABAS
