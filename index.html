@@ -274,12 +274,21 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--ink-mute)}
 .foot-links{display:flex;gap:20px;flex-wrap:wrap}
 
 /* ============================================================ PLAYER EM JANELA */
-.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:clamp(14px,3vw,34px)}
+.modal{
+  position:fixed;inset:0;z-index:100;overflow-y:auto;
+  display:grid;grid-template-columns:minmax(0,1fr);
+  justify-items:center;align-content:safe center;
+  padding:clamp(14px,3vw,34px);
+}
 .modal-bg{position:absolute;inset:0;background:rgba(6,9,11,.88);backdrop-filter:blur(6px)}
 .modal-box{position:relative;z-index:1;display:flex;flex-direction:column;gap:16px;align-items:center;width:max-content;max-width:100%;max-height:100%}
 .modal-stage{background:#000;border-radius:10px;overflow:hidden;box-shadow:0 30px 70px -30px rgba(0,0,0,.9)}
-.modal-stage.v{width:min(92vw,calc(68vh * 9 / 16),420px);aspect-ratio:9/16}
-.modal-stage.h{width:min(94vw,980px,calc(72vh * 16 / 9));aspect-ratio:16/9}
+.modal-stage.v{width:min(92vw,calc(66vh * 9 / 16),420px);aspect-ratio:9/16}
+.modal-stage.h{width:min(94vw,980px,calc(70vh * 16 / 9));aspect-ratio:16/9}
+@supports (height:1dvh){
+  .modal-stage.v{width:min(92vw,calc(66dvh * 9 / 16),420px)}
+  .modal-stage.h{width:min(94vw,980px,calc(70dvh * 16 / 9))}
+}
 .modal-stage iframe{width:100%;height:100%;border:0;display:block}
 .modal-foot{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;width:100%}
 .modal-stage.v + .modal-foot{justify-content:center;text-align:center}
@@ -301,12 +310,24 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--ink-mute)}
 .modal-nav.next{right:calc(-42px - 18px)}
 .modal-hint{font-family:var(--ff-mono);font-size:11px;letter-spacing:.06em;color:var(--wall-mute);text-align:center}
 @media (max-width:860px){
-  .modal-nav.prev{left:8px}
-  .modal-nav.next{right:8px}
-  .modal-x{top:12px;right:12px}
-  .modal-foot{justify-content:center;text-align:center}
-  .modal-foot h3{font-size:17px}
+  .modal{padding:12px}
+  .modal-box{width:100%;gap:12px}
+  /* menos altura para o vídeo: sobra espaço para título e botões sem cortar nada */
+  .modal-stage.v{width:min(100%,calc(54vh * 9 / 16))}
+  .modal-stage.h{width:100%}
+  /* as setas descem para os cantos de baixo em vez de cobrir o vídeo */
+  .modal-nav{top:auto;bottom:4px;transform:none;width:38px;height:38px;font-size:22px}
+  .modal-nav.prev{left:0}
+  .modal-nav.next{right:0}
+  .modal-foot{justify-content:center;text-align:center;padding-inline:46px;gap:10px}
+  .modal-foot h3{font-size:16.5px}
+  .modal-acts{width:100%;justify-content:center}
+  .modal-acts .btn{padding:11px 16px;font-size:14.5px}
+  .modal-x{top:10px;right:10px;width:34px;height:34px;font-size:19px}
   .modal-hint{display:none}
+}
+@supports (height:1dvh){
+  @media (max-width:860px){ .modal-stage.v{width:min(100%,calc(54dvh * 9 / 16))} }
 }
 
 /* ============================================================ WHATSAPP FIXO */
